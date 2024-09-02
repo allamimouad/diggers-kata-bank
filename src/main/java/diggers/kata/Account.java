@@ -21,6 +21,10 @@ public class Account {
         transactions.add(new Transaction(new Date(), amount, balance));
     }
 
+    public void withdraw(double amount) {
+
+    }
+
     public List<Transaction> getStatement() {
         return transactions;
     }
