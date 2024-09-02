@@ -14,10 +14,14 @@ public class Account {
     }
 
     public void deposit(double amount) {
-
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Deposit amount must be positive");
+        }
+        balance += amount;
+        transactions.add(new Transaction(new Date(), amount, balance));
     }
 
     public List<Transaction> getStatement() {
-        return null;
+        return transactions;
     }
 }
