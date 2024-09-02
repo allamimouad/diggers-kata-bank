@@ -22,7 +22,14 @@ public class Account {
     }
 
     public void withdraw(double amount) {
-
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Withdrawal amount must be positive");
+        }
+        if (amount > balance) {
+            throw new IllegalArgumentException("Insufficient funds");
+        }
+        balance -= amount;
+        transactions.add(new Transaction(new Date(), -amount, balance));
     }
 
     public List<Transaction> getStatement() {
