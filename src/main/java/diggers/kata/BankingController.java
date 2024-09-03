@@ -41,6 +41,7 @@ public class BankingController {
                 handleDeposit();
                 break;
             case 2:
+                handleWithdraw();
                 break;
             case 3:
                 break;
@@ -59,6 +60,19 @@ public class BankingController {
         account.deposit(amount);
         System.out.print(System.lineSeparator());
         System.out.println("Deposit successful.");
+    }
+
+    private void handleWithdraw() {
+        System.out.print("Enter withdrawal amount: ");
+        int amount = scanner.nextInt();
+        try {
+            account.withdraw(amount);
+            System.out.print(System.lineSeparator());
+            System.out.println("Withdrawal successful.");
+        } catch (IllegalArgumentException e) {
+            System.out.print(System.lineSeparator());
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 
 }
