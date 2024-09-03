@@ -66,5 +66,47 @@ public class BankingControllerTest {
         System.setOut(originalOut);
     }
 
+    @Test
+    public void testRun_WithdrawChoice() {
+        // Simulate user input for withdraw choice, withdraw amount, and then exit
+        when(scanner.nextInt())
+                .thenReturn(2)   // First call for choosing 'Withdraw'
+                .thenReturn(50)  // Second call for the withdraw amount
+                .thenReturn(4);  // Third call for choosing 'Exit'
+
+        // Capture the output
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        PrintStream originalOut = System.out;
+        System.setOut(new PrintStream(outContent));
+
+        // Run the controller
+        controller.run();
+
+        // Verify interactions
+        verify(scanner, times(3)).nextInt(); // Verify that scanner.nextInt() is called exactly 3 times
+        verify(account, times(1)).withdraw(50); // Verify that account.withdraw(50) is called once
+
+        // Verify the output
+        String expectedOutput = "Banking Application Menu:" + System.lineSeparator() +
+                "1. Deposit" + System.lineSeparator() +
+                "2. Withdraw" + System.lineSeparator() +
+                "3. Print Statement" + System.lineSeparator() +
+                "4. Exit" + System.lineSeparator() +
+                "Enter your choice: " + System.lineSeparator() +
+                "Enter withdrawal amount: " + System.lineSeparator() +
+                "Withdrawal successful." + System.lineSeparator() +
+                "Banking Application Menu:" + System.lineSeparator() +
+                "1. Deposit" + System.lineSeparator() +
+                "2. Withdraw" + System.lineSeparator() +
+                "3. Print Statement" + System.lineSeparator() +
+                "4. Exit" + System.lineSeparator() +
+                "Enter your choice: " + System.lineSeparator() +
+                "Exiting the application." + System.lineSeparator();
+        assertEquals(expectedOutput.trim(), outContent.toString().trim());
+
+        // Restore original System.out
+        System.setOut(originalOut);
+    }
+
 }
 
