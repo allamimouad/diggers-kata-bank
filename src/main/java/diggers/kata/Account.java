@@ -38,7 +38,10 @@ public class Account {
     }
 
     public void printStatement(PrintStream out) {
-
+        out.println("Date\t\t\tAmount\t\tBalance");
+        for (Transaction transaction : transactions) {
+            out.println(transaction.getDate() + "\t" + transaction.getAmount() + "\t\t" + transaction.getBalanceAfterTransaction());
+        }
     }
 
 }
