@@ -108,5 +108,83 @@ public class BankingControllerTest {
         System.setOut(originalOut);
     }
 
+    @Test
+    public void testRun_PrintStatementChoice() {
+        // Simulate user input for print statement choice and then exit
+        when(scanner.nextInt())
+                .thenReturn(3)  // First call for choosing 'Print Statement'
+                .thenReturn(4); // Second call for choosing 'Exit'
+
+        // Capture the output
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        PrintStream originalOut = System.out;
+        System.setOut(new PrintStream(outContent));
+
+        // Run the controller
+        controller.run();
+
+        // Verify interactions
+        verify(scanner, times(2)).nextInt(); // Verify that scanner.nextInt() is called exactly 2 times
+        verify(account, times(1)).printStatement(any(PrintStream.class)); // Verify that account.printStatement is called once
+
+        // Verify the output
+        String expectedOutput = "Banking Application Menu:" + System.lineSeparator() +
+                "1. Deposit" + System.lineSeparator() +
+                "2. Withdraw" + System.lineSeparator() +
+                "3. Print Statement" + System.lineSeparator() +
+                "4. Exit" + System.lineSeparator() +
+                "Enter your choice: " + System.lineSeparator() +
+                "Account Statement:" + System.lineSeparator() +
+                "Banking Application Menu:" + System.lineSeparator() +
+                "1. Deposit" + System.lineSeparator() +
+                "2. Withdraw" + System.lineSeparator() +
+                "3. Print Statement" + System.lineSeparator() +
+                "4. Exit" + System.lineSeparator() +
+                "Enter your choice: " + System.lineSeparator() +
+                "Exiting the application." + System.lineSeparator();
+        assertEquals(expectedOutput.trim(), outContent.toString().trim());
+
+        // Restore original System.out
+        System.setOut(originalOut);
+    }
+
+    @Test
+    public void testRun_InvalidChoice() {
+        // Simulate user input for an invalid choice and then exit
+        when(scanner.nextInt())
+                .thenReturn(99)  // First call for an invalid choice
+                .thenReturn(4);  // Second call for choosing 'Exit'
+
+        // Capture the output
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        PrintStream originalOut = System.out;
+        System.setOut(new PrintStream(outContent));
+
+        // Run the controller
+        controller.run();
+
+        // Verify interactions
+        verify(scanner, times(2)).nextInt(); // Verify that scanner.nextInt() is called exactly 2 times
+
+        // Verify the output
+        String expectedOutput = "Banking Application Menu:" + System.lineSeparator() +
+                "1. Deposit" + System.lineSeparator() +
+                "2. Withdraw" + System.lineSeparator() +
+                "3. Print Statement" + System.lineSeparator() +
+                "4. Exit" + System.lineSeparator() +
+                "Enter your choice: " + System.lineSeparator() +
+                "Invalid choice. Please try again." + System.lineSeparator() +
+                "Banking Application Menu:" + System.lineSeparator() +
+                "1. Deposit" + System.lineSeparator() +
+                "2. Withdraw" + System.lineSeparator() +
+                "3. Print Statement" + System.lineSeparator() +
+                "4. Exit" + System.lineSeparator() +
+                "Enter your choice: " + System.lineSeparator() +
+                "Exiting the application." + System.lineSeparator();
+        assertEquals(expectedOutput.trim(), outContent.toString().trim());
+
+        // Restore original System.out
+        System.setOut(originalOut);
+    }
 }
 
