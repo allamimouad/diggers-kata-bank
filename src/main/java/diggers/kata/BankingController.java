@@ -44,6 +44,7 @@ public class BankingController {
                 handleWithdraw();
                 break;
             case 3:
+                printStatement();
                 break;
             case 4:
                 System.out.println("Exiting the application.");
@@ -75,4 +76,8 @@ public class BankingController {
         }
     }
 
+    private void printStatement() {
+        System.out.println("Account Statement:");
+        account.printStatement(System.out);
+    }
 }
