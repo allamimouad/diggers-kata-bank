@@ -38,7 +38,7 @@ public class App
                     System.out.print("Enter withdrawal amount: ");
                     double withdrawalAmount = scanner.nextDouble();
                     try {
-                        //account.withdraw(withdrawalAmount);
+                        account.withdraw(withdrawalAmount);
                         System.out.println("Withdrew: " + withdrawalAmount);
                     } catch (IllegalArgumentException e) {
                         System.out.println(e.getMessage());
@@ -46,7 +46,7 @@ public class App
                     break;
                 case 3:
                     System.out.println("\n--- Account Statement ---");
-                    TransactionHistoryPrinter.print(account.getStatement());
+                    account.printStatement(System.out);
                     break;
                 case 4:
                     exit = true;

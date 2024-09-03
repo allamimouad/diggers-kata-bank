@@ -1,5 +1,6 @@
 package diggers.kata;
 
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -33,6 +34,11 @@ public class Account {
     }
 
     public List<Transaction> getStatement() {
-        return transactions;
+        return new ArrayList<>(transactions);
     }
+
+    public void printStatement(PrintStream out) {
+
+    }
+
 }
